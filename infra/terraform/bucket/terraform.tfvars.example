@@ -1,0 +1,4 @@
+cloud_id                 = "__id__"
+folder_id                = "__id__"
+zone                     = "ru-central1-a"
+service_account_key_file = "pathc_to_key.json"

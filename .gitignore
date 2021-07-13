@@ -2,6 +2,7 @@
 *.tfstate.*.backup
 *.tfstate.backup
 *.tfvars
+!*.tfvars.example
 .terraform/
 key.json
 infra/terraform/state.tf

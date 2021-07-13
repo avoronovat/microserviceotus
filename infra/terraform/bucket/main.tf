@@ -9,5 +9,5 @@ provider "yandex" {
 resource "yandex_storage_bucket" "infrastructure" {
   access_key = "ea9aKWLPcjYdB7ainqGx"
   secret_key = "wJxH1Lv1k1em6OWrn732JVa0il4oNmDoQvj55N5H"
-  bucket = "infra.tfstate"
+  bucket     = "infra.tfstate"
 }

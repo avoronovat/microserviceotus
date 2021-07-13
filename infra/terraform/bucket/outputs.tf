@@ -14,8 +14,8 @@ output "bucket_secret_key" {
 resource "local_file" "backend_bucket" {
   content = templatefile("state.tf.tmpl",
     {
-      name = yandex_storage_bucket.infrastructure.bucket,
-      access_key  = yandex_storage_bucket.infrastructure.access_key,
+      name       = yandex_storage_bucket.infrastructure.bucket,
+      access_key = yandex_storage_bucket.infrastructure.access_key,
       secret_key = yandex_storage_bucket.infrastructure.secret_key
     }
   )

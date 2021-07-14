@@ -10,7 +10,7 @@ output "bucket_access_key" {
 output "bucket_secret_key" {
   value = yandex_storage_bucket.infrastructure.secret_key
 }
-
+# из шаблона собираем настройки бэкенда для хранения стейт файла
 resource "local_file" "backend_bucket" {
   content = templatefile("state.tf.tmpl",
     {

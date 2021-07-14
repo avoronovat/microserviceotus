@@ -46,5 +46,7 @@ resource "yandex_compute_instance" "deployment" {
 #      # путь до приватного ключа
 #      private_key = "${file(var.private_key_path)}"
 #    }
-
+  provisioner "local-exec" {
+    command = "ansible-galaxy collection install -f ../ansible/requirements.yml"
+  }
 }

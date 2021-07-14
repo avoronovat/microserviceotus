@@ -1,0 +1,16 @@
+---
+- name: Deploy gitlabci
+  hosts: gitlabci
+  become: true
+  gather_facts: False
+
+  tasks:
+    - name: create dir for gitlab volumes
+      file:
+        path: '{{ item.dir }}'
+        state: directory
+        recurse: yes
+      loop:
+         - { dir: /srv/gitlab/config }
+         - { dir: /srv/gitlab/data }
+         - { dir: /srv/gitlab/logs }

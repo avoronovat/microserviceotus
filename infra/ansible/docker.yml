@@ -1,0 +1,39 @@
+---
+- name: Deploy docker
+  hosts: gitlabci
+  become: true
+#  gather_facts: False
+
+  tasks:
+    - name: install dep's
+      apt:
+        name: '{{ item.pkg }}'
+        state: present
+        update_cache: yes
+      loop:
+        - { pkg: apt-transport-https }
+        - { pkg: ca-certificates }
+        - { pkg: curl }
+        - { pkg: gnupg }
+        - { pkg: lsb-release }
+
+    - name: install GPG Docker key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        keyring: /usr/share/keyrings/docker-archive-keyring.gpg
+        state: present
+
+    - name: add Docker repo
+      apt_repository:
+        repo: deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu {{ansible_lsb.codename}} stable
+        state: present
+
+    - name: install Docker
+      apt:
+        name: '{{ item.pkg }}'
+        state: present
+        update_cache: yes
+      loop:
+        - { pkg: docker-ce }
+        - { pkg: docker-ce-cli }
+        - { pkg: containerd.io }

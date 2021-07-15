@@ -2,15 +2,27 @@
 - name: Deploy gitlabci
   hosts: gitlabci
   become: true
-  gather_facts: False
+  gather_facts: true
+#  vars_files:
+#    gitlab.var.yml
 
-  tasks:
-    - name: create dir for gitlab volumes
-      file:
-        path: '{{ item.dir }}'
-        state: directory
-        recurse: yes
-      loop:
-         - { dir: /srv/gitlab/config }
-         - { dir: /srv/gitlab/data }
-         - { dir: /srv/gitlab/logs }
+#  tasks:
+#    - name: ip
+#      debug:
+#        msg: OS Family "{{ ansible_os_family }}"
+
+  vars:
+    gitlab_external_url: "http://{{ ansible_host }}"
+  roles:
+    - { role: geerlingguy.gitlab }
+
+#  tasks:
+#    - name: create dir for gitlab volumes
+#      file:
+#        path: '{{ item.dir }}'
+#        state: directory
+#        recurse: yes
+#      loop:
+#         - { dir: /srv/gitlab/config }
+#         - { dir: /srv/gitlab/data }
+#         - { dir: /srv/gitlab/logs }

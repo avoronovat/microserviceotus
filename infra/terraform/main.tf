@@ -38,15 +38,23 @@ resource "yandex_compute_instance" "deployment" {
     ssh-keys = "ubuntu:${file(var.public_key_path)}"
   }
 
-#  connection {
-#      type  = "ssh"
-#      host  = yandex_compute_instance.deployment.network_interface.0.nat_ip_address
-#      user  = "ubuntu"
-#      agent = false
-#      # путь до приватного ключа
-#      private_key = "${file(var.private_key_path)}"
-#    }
   provisioner "local-exec" {
-    command = "ansible-galaxy collection install -f ../ansible/requirements.yml"
+    command = "ansible-galaxy install -r ../ansible/requirements.yml -p ../ansible/roles"
+  }
+
+}
+
+resource "time_sleep" "wait30s" {
+  depends_on = [yandex_compute_instance.deployment]
+  create_duration = "30s"
+}
+
+resource "null_resource" "ansible-galaxy" {
+  depends_on = [
+    time_sleep.wait30s,
+  ]
+  provisioner "local-exec" {
+    command = "ansible-playbook gitlabci.yml"
+    working_dir = "../ansible/"
   }
 }

@@ -8,3 +8,4 @@ key.json
 infra/terraform/state.tf
 infra/ansible/inventory.yml
 infra/ansible/ansible.cfg
+infra/ansible/roles/*

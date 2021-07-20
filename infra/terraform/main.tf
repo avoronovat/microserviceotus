@@ -44,8 +44,70 @@ resource "yandex_compute_instance" "deployment" {
 
 }
 
+resource "yandex_compute_instance" "stage" {
+  name = "stage"
+
+  labels = {
+    tags = "stage"
+  }
+  resources {
+    cores         = 2
+    memory        = 4
+    core_fraction = 5
+  }
+
+  boot_disk {
+    initialize_params {
+      image_id = "${yandex_compute_image.img_ubuntu.id}"
+      size = 50
+    }
+  }
+
+  network_interface {
+    subnet_id = var.subnet_id
+    nat       = true
+  }
+
+  metadata = {
+    ssh-keys = "ubuntu:${file(var.public_key_path)}"
+  }
+
+}
+
+
+resource "yandex_compute_instance" "prod" {
+  name = "prod"
+
+  labels = {
+    tags = "prod"
+  }
+  resources {
+    cores         = 2
+    memory        = 4
+    core_fraction = 5
+  }
+
+  boot_disk {
+    initialize_params {
+      image_id = "${yandex_compute_image.img_ubuntu.id}"
+      size = 50
+    }
+  }
+
+  network_interface {
+    subnet_id = var.subnet_id
+    nat       = true
+  }
+
+  metadata = {
+    ssh-keys = "ubuntu:${file(var.public_key_path)}"
+  }
+
+}
+
+
 resource "time_sleep" "wait30s" {
-  depends_on = [yandex_compute_instance.deployment]
+  depends_on = [yandex_compute_instance.deployment, yandex_compute_instance.stage, yandex_compute_instance.prod]
   create_duration = "30s"
 }
 
@@ -55,6 +117,16 @@ resource "null_resource" "ansible-galaxy" {
   ]
   provisioner "local-exec" {
     command = "ansible-playbook gitlabci.yml"
+    working_dir = "../ansible/"
+  }
+}
+
+resource "null_resource" "SetDocker" {
+  depends_on = [
+    time_sleep.wait30s,
+  ]
+  provisioner "local-exec" {
+    command = "ansible-playbook docker.yml"
     working_dir = "../ansible/"
   }
 }

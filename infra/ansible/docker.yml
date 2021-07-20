@@ -1,6 +1,6 @@
 ---
 - name: Deploy docker
-  hosts: gitlabci
+  hosts: stage,prod
   become: true
 #  gather_facts: False
 

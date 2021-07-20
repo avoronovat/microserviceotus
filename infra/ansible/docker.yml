@@ -1,8 +1,8 @@
 ---
 - name: Deploy docker
-  hosts: stage,prod
+  hosts: stage,prod,deployment
   become: true
-#  gather_facts: False
+  gather_facts: true
 
   tasks:
     - name: install dep's

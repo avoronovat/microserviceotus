@@ -3,6 +3,8 @@
   hosts: gitlabci
   become: true
   gather_facts: true
+  collections:
+    - community.docker
 #  vars_files:
 #    gitlab.var.yml
 
@@ -15,6 +17,17 @@
     gitlab_external_url: "http://{{ ansible_host }}"
   roles:
     - { role: geerlingguy.gitlab }
+
+  tasks:
+    - name: Set docker runner for GitLab
+      docker_container:
+        name: gitlab-runner
+        detach: yes
+        image: gitlab/gitlab-runner:latest
+        volumes:
+           - /srv/gitlab-runner/config:/etc/gitlab-runner
+           - /var/run/docker.sock:/var/run/docker.sock
+        restart_policy: always
 
 #  tasks:
 #    - name: create dir for gitlab volumes

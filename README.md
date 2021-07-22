@@ -18,7 +18,7 @@ Terraform
     если не получается зайти в вебку гитлаба, то подключаемся по ssh и меняем пароль
      ssh -i <path_to_private.key> ubuntu@<gitlabci server ip>
      sudo gitlab-rake "gitlab:password:reset[root]"
-2. Подготовка работы с Gitlab CI/CD
+2. Подготовка работы с Gitlab CI/CD (переписать - все уже в одной репе!!!!!)
 2.1. Грузим из стороннего гита или иного хранилища репу. (загружаем руками или еще как иначе)
      just my way:
       - сделал форк в свой гитхаб из проекта демки микросервиса https://github.com/GoogleCloudPlatform/microservices-demo
@@ -32,3 +32,4 @@ Terraform
        cd infra/ansible
        ansible-playbook reg_runner.yml
      - раннер для выполнения пайплана проекта зареган
+3.

@@ -1,0 +1,14 @@
+deployment:
+  hosts:
+    gitlabci:
+      ansible_host: ${gitlab_ip}
+
+stage:
+  hosts:
+    stage:
+      ansible_host: ${stage_ip}
+
+prod:
+  hosts:
+    prod:
+      ansible_host: ${prod_ip}

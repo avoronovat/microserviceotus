@@ -1,0 +1,6 @@
+---
+roles:
+  - name: geerlingguy.gitlab
+
+collections:
+  - name: community.docker

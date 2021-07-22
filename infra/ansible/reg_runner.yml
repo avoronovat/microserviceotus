@@ -1,0 +1,17 @@
+---
+- name: Reg runner for gitlabci
+  hosts: deployment
+  become: true
+  gather_facts: true
+  collections:
+    - community.docker
+  vars:
+    token: KJpy3RzGMmcuN35vi6Z1
+    tag: "linux,xenial,ubuntu,docker"
+  tasks:
+    - name: register runner to project
+      command: docker exec gitlab-runner gitlab-runner register --url http://{{ ansible_host }}/ --non-interactive --locked=false --name DockerRunner --executor docker --docker-image alpine:latest --registration-token {{ token }} --tag-list {{ tag }} --run-untagged
+#      docker_container_exec:
+#        container: gitlab-runner
+#        tty: yes
+#          - gitlab-runner register --url http://{{ ansible_host }}/ --non-interactive --locked=false --name DockerRunner --executor docker --docker-image alpine:latest --registration-token {{ token }} --tag-list {{ tag }} --run-untagged

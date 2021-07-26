@@ -19,7 +19,7 @@ Terraform
      ssh -i <path_to_private.key> ubuntu@<gitlabci server ip>
      sudo gitlab-rake "gitlab:password:reset[root]"
 2. Подготовка работы с Gitlab CI/CD (переписать - все уже в одной репе!!!!!)
-2.1. Грузим из стороннего гита или иного хранилища репу. (загружаем руками или еще как иначе)
+2.1. Грузим из стороннего гита или иного хранилища репу. (загружаем руками или еще как иначе)  - ПЕРЕДЕЛАТЬ
      just my way:
       - сделал форк в свой гитхаб из проекта демки микросервиса https://github.com/GoogleCloudPlatform/microservices-demo
       - получил токен для импорта в проекта в развернутый gitlab на deploy инстанса
